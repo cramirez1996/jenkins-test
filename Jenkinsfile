@@ -1,9 +1,4 @@
 pipeline {
-
-  environment {
-    registry = "nginx"
-    dockerImage = ""
-  }
   
   agent { label 'kubepod' }
 
