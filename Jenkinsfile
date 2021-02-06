@@ -4,8 +4,8 @@ pipeline {
     registry = "nginx"
     dockerImage = ""
   }
-
-  agent any
+  
+  agent { label 'kubepod' }
 
   stages {
 
