@@ -14,6 +14,14 @@ pipeline {
         git 'https://github.com/cramirez1996/jenkins-test'
       }
     }
+    
+    stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "k8s.yml", kubeconfigId: "kubeconfig")
+        }
+      }
+    }
 
   }
 
