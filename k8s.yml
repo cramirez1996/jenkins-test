@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: test-deploy
-        image: cramirez96/jenkinstest:$(BUILD_ID)
+        image: cramirez96/jenkinstest
         ports:
         - containerPort: 80
 ---
