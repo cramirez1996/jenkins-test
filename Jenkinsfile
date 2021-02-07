@@ -3,16 +3,7 @@ pipeline {
   agent { label 'kubepod' }
 
   stages {
-    
-    stage('Init') {
-      steps {
-        script {
-          def dockerHome = tool 'myDocker'
-          env.PATH = "${dockerHome}/bin:${env.PATH}"
-        }
-      }
-    }
-
+  
     stage('Checkout Source') {
       steps {
         git 'https://github.com/cramirez1996/jenkins-test'
