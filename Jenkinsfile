@@ -13,7 +13,7 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-          myapp = docker.build("cramirez96/jenkinstest:${env.BUILD_ID}", "--no-cache")
+          myapp = docker.build("cramirez96/jenkinstest", "--no-cache", "-t ${env.BUILD_ID}")
         }
       }
     }
