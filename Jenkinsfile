@@ -3,6 +3,11 @@ pipeline {
   agent { label 'kubepod' }
 
   stages {
+    
+    stage('Init') {
+      def dockerHome = tool 'myDocker'
+      env.PATH = "${dockerHome}/bin:${env.PATH}"
+    }
 
     stage('Checkout Source') {
       steps {
