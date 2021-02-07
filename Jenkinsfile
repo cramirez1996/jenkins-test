@@ -13,7 +13,7 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-          myapp = docker.build("cramirez96/jenkinstest:${env.BUILD_ID}")
+          myapp = docker.build("localhost:30100/jenkinstest:${env.BUILD_ID}")
         }
       }
     }
@@ -21,7 +21,7 @@ pipeline {
     stage('Push Image'){
       steps {
         script {
-          docker.withRegistry('https://registry.hub.docker.com', 'cramirez96DockerHub'){
+          docker.withRegistry('http://localhost:30100', 'cramirez96DockerHub'){
             myapp.push('latest')
             myapp.push('${env.BUILD_ID}')
           }
