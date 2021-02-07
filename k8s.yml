@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: test-deploy
-        image: nginx:latest
+        image: cramirez96/jenkinstest
         ports:
         - containerPort: 80
 ---
