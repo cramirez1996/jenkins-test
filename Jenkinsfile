@@ -33,7 +33,7 @@ pipeline {
       steps {
         script {
           def inptext = readFile file: "k8s.yml" 
-          inptext = inptext.replaceAll("{BUILD_ID}", "${env.BUILD_ID}")       
+          inptext = inptext.replaceAll(~/{BUILD_ID}/, "${env.BUILD_ID}")       
           writeFile file: "k8s.yml", text: inptext
           kubernetesDeploy(configs: "k8s.yml", kubeconfigId: "kubeconfig")
         }
