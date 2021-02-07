@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
       - name: test-deploy
-        image: cramirez96/jenkinstest
-        imagePullPolicy: Always
+        image: cramirez96/jenkinstest:{BUILD_ID}
         ports:
         - containerPort: 80
 ---
