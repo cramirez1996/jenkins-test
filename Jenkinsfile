@@ -10,6 +10,25 @@ pipeline {
       }
     }
     
+    stage('Build Image') {
+      steps {
+        script {
+          myapp = docker.build("cramirez96/jenkinstest:${env.BUILD_ID}")
+        }
+      }
+    }
+    
+    stage('Push Image'){
+      steps {
+        script {
+          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub'){
+            myapp.push('latest')
+            myapp.push('${env.BUILD_ID}')
+          }
+        }
+      }
+    }
+    
     stage('Deploy App') {
       steps {
         script {
