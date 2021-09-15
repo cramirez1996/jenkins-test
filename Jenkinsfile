@@ -18,10 +18,6 @@ pipeline {
             label 'jenkins-slave'
         }        
     }
-
-    agent {
-      docker { image 'node:14-alpine' }
-    }
   
   environment {
     NAMESPACE = getNamespace(GIT_BRANCH)
@@ -56,6 +52,9 @@ pipeline {
     // }
 
      stage('Build Image') {
+       agent {
+      docker { image 'node:14-alpine' }
+    }
       steps {
         script {
           repo = docker.build("${REGISTRY}:${env.BUILD_ID}")
@@ -64,6 +63,9 @@ pipeline {
     }
 
     stage('Push Image'){
+      agent {
+      docker { image 'node:14-alpine' }
+    }
       steps {
         script {
           docker.withRegistry('https://' + REGISTRY, ECR_REGION + ECR_CREDENTIALS){
