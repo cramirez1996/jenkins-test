@@ -1,45 +1,69 @@
 pipeline {
   
-  agent { label 'kubepod' }
+  agent { label 'jenkins-slave' }
 
   stages {
-  
-    stage('Checkout Source ') {
-      steps {
-        git 'https://github.com/cramirez1996/jenkins-test'
-      }
-    }
-    
-    stage('Build Image') {
-      steps {
-        script {
-          myapp = docker.build("cramirez96/jenkinstest:${env.BUILD_ID}")
-        }
-      }
-    }
-    
-    stage('Push Image'){
-      steps {
-        script {
-          docker.withRegistry('https://registry.hub.docker.com', 'cramirez96DockerHub'){
-            myapp.push('latest')
-            myapp.push("${env.BUILD_ID}")
-          }
-        }
-      }
-    }
-    
-    stage('Deploy App') {
-      steps {
-        script {
-          def inptext = readFile file: "k8s.yml" 
-          inptext = inptext.replaceAll("\\{BUILD_ID\\}", "${env.BUILD_ID}")       
-          writeFile file: "k8s.yml", text: inptext
-          kubernetesDeploy(configs: "k8s.yml", kubeconfigId: "kubeconfig")
-        }
-      }
-    }
 
+    stage('Testing Functionality') {
+      steps {
+          sh script: """
+          ls
+          """
+      }
+    }
+  
+    // stage('Checkout Source') {
+    //   steps {
+    //     git 'https://github.com/cramirez1996/jenkins-test'
+    //   }
+    // }
+
+    // stage('Clone Repository') {
+    //   steps{
+    //       sh(script: '''
+    //           git clone https://github.com/cramirez1996/jenkins-test.git
+    //       ''', returnStdout: true) 
+    //   }
+    // }
+            
+    // stage('Modify YML') {
+    //   steps {
+    //     script {
+    //       def inptext = readFile file: "$WORKSPACE/jenkins-test/k8s.yml"
+    //       inptext = inptext.replaceAll("\\{BUILD_ID\\}", "latest")       
+    //       writeFile file: "$WORKSPACE/jenkins-test/k8s.yml", text: inptext
+          
+    //     }
+    //   }
+    // }
+
+    // stage('Change Directory') {
+    //   steps {
+    //       sh script: """
+    //       #!/bin/bash
+    //       cd $WORKSPACE/jenkins-test/
+    //       ls
+    //       """
+    //   }
+    // }
+
+    // stage('Install kubectl') {
+    //   steps {
+    //       sh script: '''
+    //       #get kubectl for this demo
+    //       curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    //       chmod +x ./kubectl
+    //       '''
+    //   }
+    // }
+
+    // stage('Deploy') {
+    //   steps {
+    //       sh script: """
+    //       ./kubectl apply -f $WORKSPACE/jenkins-test/k8s.yml
+    //       """
+    //   }
+    // }
   }
 
 }
