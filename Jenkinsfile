@@ -23,7 +23,7 @@ pipeline {
     NAMESPACE = getNamespace(GIT_BRANCH)
     REGISTRY = "247092817324.dkr.ecr.us-east-2.amazonaws.com/test"
     ECR_CREDENTIALS = "eks-deployer"
-    ECR_REGION = "ecr:eu-central-1:"
+    ECR_REGION = "ecr:us-east-2:"
   }
 
   stages {
@@ -39,7 +39,7 @@ pipeline {
     stage('Push Image'){
       steps {
         script {
-          docker.withRegistry(REGISTRY, ECR_REGION + ECR_CREDENTIALS){
+          docker.withRegistry('https://' + REGISTRY, ECR_REGION + ECR_CREDENTIALS){
             myapp.push("${NAMESPACE}-latest")
             myapp.push("${NAMESPACE}-${env.BUILD_ID}")
           }
