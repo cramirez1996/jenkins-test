@@ -1,6 +1,12 @@
 pipeline {
   
-  agent { label 'jenkins-slave' }
+  
+  agent { 
+        kubernetes{
+            label 'jenkins-slave'
+        }
+        
+    }
 
   stages {
 
