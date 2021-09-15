@@ -26,7 +26,7 @@ pipeline {
 
      stage('Build Image') {
        agent {
-      docker { image 'node:14-alpine' }
+      docker { image '20.10.8-alpine3.14' }
     }
       steps {
         script {
@@ -37,7 +37,7 @@ pipeline {
 
     stage('Push Image'){
       agent {
-        docker { image 'node:14-alpine' }
+        docker { image '20.10.8-alpine3.14' }
       }
       steps {
         script {
