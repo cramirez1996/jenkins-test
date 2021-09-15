@@ -12,7 +12,11 @@ def getNamespace(branchName){
 
 pipeline {
   
-  agent any
+    agent { 
+        kubernetes{
+            label 'jenkins-slave'
+        }        
+    }
   
   
   environment {
@@ -44,11 +48,6 @@ pipeline {
     }
             
     stage('Modify YML') {
-      agent { 
-        kubernetes{
-            label 'jenkins-slave'
-        }        
-    }
       steps {
         script {
           def inptext = readFile file: "k8s.yml"
@@ -71,11 +70,6 @@ pipeline {
     // }
 
     stage('Install kubectl') {
-      agent { 
-        kubernetes{
-            label 'jenkins-slave'
-        }        
-    }
       steps {
           sh script: '''
           #get kubectl for this demo
@@ -86,11 +80,6 @@ pipeline {
     }
 
     stage('Deploy') {
-      agent { 
-        kubernetes{
-            label 'jenkins-slave'
-        }        
-    }
       steps {
           sh script: """
           ./kubectl apply -f k8s.yml
