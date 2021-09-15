@@ -9,7 +9,7 @@ pipeline {
     }
   
   environment {
-    CURRENT_BRANCH = "${GIT_BRANCH}"
+    NAMESPACE = (GIT_BRANCH == 'origin/master') ? 'prod' : (GIT_BRANCH == 'origin/development') ? 'dev' : (GIT_BRANCH == 'origin/testing') ? 'testing' : ''
   }
 
   stages {
@@ -18,7 +18,7 @@ pipeline {
       steps {
           sh script: """
           ls
-          echo $CURRENT_BRANCH
+          echo $NAMESPACE
           """
       }
     }
