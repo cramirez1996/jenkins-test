@@ -12,7 +12,9 @@ def getNamespace(branchName){
 
 pipeline {
   
-  agent none
+  agent {
+    docker { image '20.10.8-alpine3.14' }
+  }
   
   
   environment {
@@ -25,9 +27,6 @@ pipeline {
   stages {
 
      stage('Build Image') {
-       agent {
-      docker { image '20.10.8-alpine3.14' }
-    }
       steps {
         script {
           repo = docker.build("${REGISTRY}:${env.BUILD_ID}")
@@ -36,9 +35,6 @@ pipeline {
     }
 
     stage('Push Image'){
-      agent {
-        docker { image '20.10.8-alpine3.14' }
-      }
       steps {
         script {
           docker.withRegistry('https://' + REGISTRY, ECR_REGION + ECR_CREDENTIALS){
