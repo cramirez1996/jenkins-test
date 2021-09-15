@@ -29,7 +29,7 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-          repo = docker.build("${REGISTRY}:${env.BUILD_ID}", "--network host")
+          repo = docker.build("${REGISTRY}:${env.BUILD_ID}", "--network host", ".")
         }
       }
     }
