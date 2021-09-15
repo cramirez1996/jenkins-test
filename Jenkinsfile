@@ -12,9 +12,7 @@ def getNamespace(branchName){
 
 pipeline {
   
-  agent {
-    docker { image '20.10.8-alpine3.14' }
-  }
+  agent any
   
   
   environment {
