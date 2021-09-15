@@ -12,12 +12,11 @@ def getNamespace(branchName){
 
 pipeline {
   
-    agent { 
-        kubernetes{
-            label 'jenkins-slave'
-        }        
-    }
-  
+  agent { 
+      kubernetes{
+          label 'jenkins-slave'
+      }        
+  }
   
   environment {
     NAMESPACE = getNamespace(GIT_BRANCH)
@@ -27,11 +26,10 @@ pipeline {
   }
 
   stages {
-
-     stage('Build Image') {
+    stage('Build Image') {
       steps {
         script {
-          repo = docker.build("${REGISTRY}:${env.BUILD_ID}")
+          repo = docker.build("${REGISTRY}:${env.BUILD_ID}", "--network host")
         }
       }
     }
@@ -58,16 +56,6 @@ pipeline {
         }
       }
     }
-
-    // stage('Change Directory') {
-    //   steps {
-    //       sh script: """
-    //       #!/bin/bash
-    //       cd $WORKSPACE/jenkins-test/
-    //       ls
-    //       """
-    //   }
-    // }
 
     stage('Install kubectl') {
       steps {
