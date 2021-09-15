@@ -18,19 +18,19 @@ pipeline {
       }
     }
   
-//     stage('Checkout Source') {
-//       steps {
-//         git 'https://github.com/cramirez1996/jenkins-test'
-//       }
-//     }
+    stage('Checkout Source') {
+      steps {
+        git 'https://github.com/cramirez1996/jenkins-test'
+      }
+    }
 
-//     stage('Clone Repository') {
-//       steps{
-//           sh(script: '''
-//               git clone https://github.com/cramirez1996/jenkins-test.git
-//           ''', returnStdout: true) 
-//       }
-//     }
+    stage('Clone Repository') {
+      steps{
+          sh(script: '''
+              git clone https://github.com/cramirez1996/jenkins-test.git
+          ''', returnStdout: true) 
+      }
+    }
             
     stage('Modify YML') {
       steps {
