@@ -39,7 +39,7 @@ pipeline {
     stage('Push Image'){
       steps {
         script {
-          docker.withRegistry('https://' + REGISTRY, ECR_REGION + ECR_CREDENTIALS){
+          docker.withRegistry(REGISTRY, ECR_REGION + ECR_CREDENTIALS){
             myapp.push("${NAMESPACE}-latest")
             myapp.push("${NAMESPACE}-${env.BUILD_ID}")
           }
