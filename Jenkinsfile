@@ -17,6 +17,8 @@ pipeline {
         kubernetes{
             label 'jenkins-slave'
         }
+
+        docker { image 'node:14-alpine' }
         
     }
   
