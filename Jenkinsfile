@@ -1,3 +1,15 @@
+def getNamespace(branchName){
+  if(branchName == 'origin/master'){
+    return "prod";
+  } else if (branchName == 'origin/development') {
+    return "dev";
+  } else if (branchName == 'origin/testing') {
+    return "testing";
+  } else {
+    return "";
+  }
+}
+
 pipeline {
   
   
@@ -9,7 +21,7 @@ pipeline {
     }
   
   environment {
-    NAMESPACE = (GIT_BRANCH == 'origin/master') ? 'prod' : (GIT_BRANCH == 'origin/development') ? 'dev' : (GIT_BRANCH == 'origin/testing') ? 'testing' : ''
+    NAMESPACE = getNamespace(GIT_BRANCH)
   }
 
   stages {
