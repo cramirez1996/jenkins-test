@@ -12,12 +12,8 @@ def getNamespace(branchName){
 
 pipeline {
   
+  agent none
   
-  agent { 
-        kubernetes{
-            label 'jenkins-slave'
-        }        
-    }
   
   environment {
     NAMESPACE = getNamespace(GIT_BRANCH)
@@ -27,29 +23,6 @@ pipeline {
   }
 
   stages {
-
-    stage('Testing Functionality') {
-      steps {
-          sh script: """
-          ls
-          echo $NAMESPACE
-          """
-      }
-    }
-  
-    // stage('Checkout Source') {
-    //   steps {
-    //     git 'https://github.com/cramirez1996/jenkins-test'
-    //   }
-    // }
-
-    // stage('Clone Repository') {
-    //   steps{
-    //       sh(script: '''
-    //           git clone https://github.com/cramirez1996/jenkins-test.git
-    //       ''', returnStdout: true) 
-    //   }
-    // }
 
      stage('Build Image') {
        agent {
@@ -64,8 +37,8 @@ pipeline {
 
     stage('Push Image'){
       agent {
-      docker { image 'node:14-alpine' }
-    }
+        docker { image 'node:14-alpine' }
+      }
       steps {
         script {
           docker.withRegistry('https://' + REGISTRY, ECR_REGION + ECR_CREDENTIALS){
@@ -77,6 +50,11 @@ pipeline {
     }
             
     stage('Modify YML') {
+      agent { 
+        kubernetes{
+            label 'jenkins-slave'
+        }        
+    }
       steps {
         script {
           def inptext = readFile file: "k8s.yml"
@@ -99,6 +77,11 @@ pipeline {
     // }
 
     stage('Install kubectl') {
+      agent { 
+        kubernetes{
+            label 'jenkins-slave'
+        }        
+    }
       steps {
           sh script: '''
           #get kubectl for this demo
@@ -109,6 +92,11 @@ pipeline {
     }
 
     stage('Deploy') {
+      agent { 
+        kubernetes{
+            label 'jenkins-slave'
+        }        
+    }
       steps {
           sh script: """
           ./kubectl apply -f k8s.yml
