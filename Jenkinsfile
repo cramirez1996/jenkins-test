@@ -54,7 +54,7 @@ pipeline {
         script {
           def inptext = readFile file: "k8s.yml"
           inptext = inptext.replaceAll("\\{BUILD_ID\\}", "latest")       
-          inptext = inptext.replaceAll("\\NAMESPACE\\}", "${NAMESPACE}")       
+          inptext = inptext.replaceAll("NAMESPACE", "${NAMESPACE}")       
           writeFile file: "k8s.yml", text: inptext
           
         }
