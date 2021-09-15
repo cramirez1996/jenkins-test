@@ -18,7 +18,7 @@ pipeline {
       steps {
           sh script: """
           ls
-          echo CURRENT_BRANCH
+          echo $CURRENT_BRANCH
           """
       }
     }
